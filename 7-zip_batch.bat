@@ -4,6 +4,7 @@ set a=c:\program files\7-zip\7z.exe
 set count1=0
 set count2=0
 set format=0
+set level=5
 
 echo [32m---------------------------   
 echo     Check file name
@@ -38,7 +39,7 @@ if %format%==1 (
 	echo [36mSetting format: zip[0m
 	set format=zip
 ) else (
-	echo [31mSetting format fail![0m
+	echo [31mInvalid input.[0m
 	echo.
 	goto ChooseFormat
 )
@@ -57,10 +58,37 @@ if [%pass%]==[] (
 )
 echo.
 
+echo [32m---------------------------   
+echo     Set compression level
+echo ---------------------------[0m
+:CompressionLevel
+echo Compression level:
+echo 0: Store
+echo 1: Fastest
+echo 3: Fast
+echo 5: Normal (default)
+echo 7: Maximum
+echo 9: Ultra
+set /p level=Enter level:
+
+if %level%==0 goto valid
+if %level%==1 goto valid
+if %level%==3 goto valid
+if %level%==5 goto valid
+if %level%==7 goto valid
+if %level%==9 goto valid
+
+echo [31mInvalid input.[0m
+echo.
+goto CompressionLevel
+
+:valid
+echo [36mSetting compression level: %level%[0m
+
 timeout /t 1 >nul
 cls
 
-echo [36mSetting: -t%format% %pass%[0m
+echo [36mSetting: -t%format% %pass% -mx%level%[0m
 echo.
 
 echo [32m---------------------------   
@@ -81,9 +109,9 @@ for %%a in (%*) do (
 	echo !count2!/!count1!	 Compressing "%%~nxa"
 	
 	dir /a %%a|findstr "DIR" >nul 2>nul && (
-	"%a%" a -t%format% "%%~a.%format%" "%%~a" -mx9 %pass% > nul
+	"%a%" a -t%format% "%%~a.%format%" "%%~a" -mx%level% %pass% > nul
 	) || (
-	"%a%" a -t%format% "%%~dpa%%~na.%format%" %%a -mx9 %pass% > nul
+	"%a%" a -t%format% "%%~dpa%%~na.%format%" %%a -mx%level% %pass% > nul
 	)
 )
 echo [36mCompress finish![0m
