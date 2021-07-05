@@ -2,7 +2,7 @@
 Realize 7-zip batch compression.
 
 ## Requirement
-- Please install [7-zip](https://www.developershome.com/7-zip/) first.
+- Please install [7-zip](https://www.7-zip.org/) first.
 - Do not change the installation path.
 
 ## Features
