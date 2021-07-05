@@ -109,9 +109,9 @@ for %%a in (%*) do (
 	echo !count2!/!count1!	 Compressing "%%~nxa"
 	
 	dir /a %%a|findstr "DIR" >nul 2>nul && (
-	"%a%" a -t%format% "%%~a.%format%" "%%~a" -mx%level% %pass% > nul
+	"%a%" a -t%format% "%%~a.%format%" "%%~a" -mx%level% %pass% -bso0 -bsp1 
 	) || (
-	"%a%" a -t%format% "%%~dpa%%~na.%format%" %%a -mx%level% %pass% > nul
+	"%a%" a -t%format% "%%~dpa%%~na.%format%" %%a -mx%level% %pass% -bso0 -bsp1 
 	)
 )
 echo [36mCompress finish![0m
