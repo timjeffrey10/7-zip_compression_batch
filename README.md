@@ -1,4 +1,4 @@
-# 7-zip_compression_batch
+# 7_zip-compression-batch
 Realize 7-zip batch compression.
 
 ## Requirement
