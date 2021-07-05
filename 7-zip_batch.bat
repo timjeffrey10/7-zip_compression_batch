@@ -25,12 +25,14 @@ Echo %* | findstr "( ) ! %%%" >nul && (
 echo [32m---------------------------   
 echo     Set format
 echo ---------------------------[0m
-:ChooseFormat
+
 echo Choose format:
 echo 1. 7z
-echo 2. zip
+echo 2. zip (default)
 
-set /p format=Enter format: 
+:ChooseFormat
+set format=2
+set /p format=Enter format (To set to the default value, just press enter): 
 
 if %format%==1 (
 	echo [36mSetting format: 7z[0m
@@ -48,7 +50,7 @@ echo.
 echo [32m---------------------------   
 echo     Set password
 echo ---------------------------[0m
-set /p pass=Enter password (if no password, just press enter):
+set /p pass=Enter password (If no password, just press enter):
 
 if [%pass%]==[] (
 	echo [36mNo password[0m.
@@ -61,7 +63,7 @@ echo.
 echo [32m---------------------------   
 echo     Set compression level
 echo ---------------------------[0m
-:CompressionLevel
+
 echo Compression level:
 echo 0: Store
 echo 1: Fastest
@@ -69,7 +71,10 @@ echo 3: Fast
 echo 5: Normal (default)
 echo 7: Maximum
 echo 9: Ultra
-set /p level=Enter level:
+
+:CompressionLevel
+set level=5
+set /p level=Enter level (To set to the default value, just press enter):
 
 if %level%==0 goto valid
 if %level%==1 goto valid
@@ -88,6 +93,16 @@ echo [36mSetting compression level: %level%[0m
 timeout /t 1 >nul
 cls
 
+echo [32m---------------------------   
+echo     Setting
+echo ---------------------------[0m
+echo Format: 		%format%
+echo Compression Level:	%level%
+if [%pass%]==[] (
+	echo No Password.
+) else (
+	echo Password:		%pass:-p=%
+)
 echo [36mSetting: -t%format% %pass% -mx%level%[0m
 echo.
 
